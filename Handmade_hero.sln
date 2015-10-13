@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32Project1", "Win32Project1\Win32Project1.vcxproj", "{DACF955C-9DBF-4FB1-8644-D79F2779732E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+		TestingNewName|x64 = TestingNewName|x64
+		TestingNewName|x86 = TestingNewName|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.Debug|x64.ActiveCfg = Debug|x64
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.Debug|x64.Build.0 = Debug|x64
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.Debug|x86.ActiveCfg = Debug|Win32
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.Debug|x86.Build.0 = Debug|Win32
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.Release|x64.ActiveCfg = Release|x64
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.Release|x64.Build.0 = Release|x64
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.Release|x86.ActiveCfg = Release|Win32
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.Release|x86.Build.0 = Release|Win32
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.TestingNewName|x64.ActiveCfg = TestingNewName|x64
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.TestingNewName|x64.Build.0 = TestingNewName|x64
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.TestingNewName|x86.ActiveCfg = TestingNewName|Win32
+		{DACF955C-9DBF-4FB1-8644-D79F2779732E}.TestingNewName|x86.Build.0 = TestingNewName|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,13 @@
+﻿Build started 09/10/2015 5:01:33 PM.
+     1>Project "D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\Win32Project1\Win32Project1.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Programs\Microsoft Visual Studio 15\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt handmade.cpp
+         handmade.cpp
+       Link:
+         D:\Programs\Microsoft Visual Studio 15\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\Debug\Win32Project1.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\Debug\Win32Project1.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\Debug\Win32Project1.lib" /MACHINE:X86 Debug\handmade.obj
+         Win32Project1.vcxproj -> D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\Debug\Win32Project1.exe
+     1>Done Building Project "D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\Win32Project1\Win32Project1.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.21
