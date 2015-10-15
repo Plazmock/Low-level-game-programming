@@ -24,11 +24,10 @@ struct win32_offscreen_buffer{
 	int Width;
 	int Height;
 	int Pitch;
-	int BytesPerPixel;
 };
 
 // global variables for now
-global_variable	bool running = true;
+global_variable	bool GlobalRunning = true;
 global_variable win32_offscreen_buffer GlobalBackBuffer;
 
 struct win32_window_dimention
@@ -90,7 +89,7 @@ internal void Win32ResizeDIBSelect(win32_offscreen_buffer *Buffer, int width, in
 
 	Buffer->Width = width;
 	Buffer->Height = height;
-	Buffer->BytesPerPixel = 4;
+	int BytesPerPixel = 4;
 
 	Buffer->Info.bmiHeader.biSize = sizeof(Buffer->Info.bmiHeader);
 	Buffer->Info.bmiHeader.biWidth = Buffer->Width;
@@ -99,17 +98,16 @@ internal void Win32ResizeDIBSelect(win32_offscreen_buffer *Buffer, int width, in
 	Buffer->Info.bmiHeader.biBitCount = 32;
 	Buffer->Info.bmiHeader.biCompression = BI_RGB;
 
-	int BitmapMemorySize = Buffer->Width*Buffer->Height*Buffer->BytesPerPixel;
+	int BitmapMemorySize = Buffer->Width*Buffer->Height*BytesPerPixel;
 	Buffer->Memory = VirtualAlloc(NULL, BitmapMemorySize, MEM_COMMIT, PAGE_READWRITE);
 
-	Buffer->Pitch = width*Buffer->BytesPerPixel;
+	Buffer->Pitch = width*BytesPerPixel;
 
 
 }
 
 // Put the BitmapMemory on the screen
-internal void Win32DisplayBufferInWindow(HDC DeviceContext, int WindowWidth, int WindowHeight, win32_offscreen_buffer Buffer,
-											int x, int y, int width, int height)
+internal void Win32DisplayBufferInWindow(HDC DeviceContext, int WindowWidth, int WindowHeight, win32_offscreen_buffer Buffer)
 {
 
 	// BitBlt is better alternative?
@@ -144,16 +142,18 @@ LRESULT CALLBACK WndProc(HWND Window, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		PAINTSTRUCT Paint;
 		HDC DeviceContext = BeginPaint(Window, &Paint);
+		/*
 		int x = Paint.rcPaint.left;
 		int y = Paint.rcPaint.top;
 		int width = Paint.rcPaint.right - Paint.rcPaint.left;
 		int height = Paint.rcPaint.bottom - Paint.rcPaint.top;
+		*/
 
 		// Clean up double ClientRect use in code?
 		RECT ClientRect;
 		GetClientRect(Window, &ClientRect);
 		win32_window_dimention Dimention = Win32GetWindowDimention(Window);
-		Win32DisplayBufferInWindow(DeviceContext, Dimention.width, Dimention.height, GlobalBackBuffer, x, y, width, height);
+		Win32DisplayBufferInWindow(DeviceContext, Dimention.width, Dimention.height, GlobalBackBuffer);
 		EndPaint(Window, &Paint);
 	} break;
 
@@ -216,18 +216,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		if (Window)
 		{
-//			Listen for messagess and send them to be handeld 
+
+			HDC DeviceContext = GetDC(Window);
+
 			int xOffset = 0;
 			int yOffset = 0;
 
-			while (running)
-			{	
+			while (GlobalRunning)
+			{
 				MSG msg;
 				while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) // If Message = VM_QUIT, GetMeassage returns 0
 				{
 					if (msg.message == WM_QUIT)
 					{
-						running = false;
+						GlobalRunning = false;
 					}
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
@@ -235,11 +237,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 				// Renter and sipaly WierdGradient
 				RenderWierdGradient(GlobalBackBuffer, xOffset, yOffset);
-				HDC DeviceContext = GetDC(Window);
 
 				win32_window_dimention Dimention = Win32GetWindowDimention(Window);
-				Win32DisplayBufferInWindow(DeviceContext, Dimention.width, Dimention.height, GlobalBackBuffer, 0, 0, Dimention.width, Dimention.height);
-				ReleaseDC(Window, DeviceContext);
+				Win32DisplayBufferInWindow(DeviceContext, Dimention.width, Dimention.height, GlobalBackBuffer);
 				
 
 				++xOffset;
