@@ -28,7 +28,7 @@ struct win32_offscreen_buffer{
 };
 
 // global variables for now
-global_variable	bool running = true;
+global_variable	bool  GlobalRunning = true;
 global_variable win32_offscreen_buffer GlobalBackBuffer;
 
 struct win32_window_dimention
@@ -52,9 +52,6 @@ win32_window_dimention Win32GetWindowDimention(HWND Window)
 // Render wierd colored moving boxes on the creen
 internal void RenderWierdGradient(win32_offscreen_buffer Buffer, int xOffset, int yOffset)
 {
-	int width = Buffer.Width;
-	int height = Buffer.Height;
-	
 
 	uint8 *Row = (uint8 *)Buffer.Memory;
 	for (int y = 0; y < Buffer.Height; ++y)
@@ -65,7 +62,7 @@ internal void RenderWierdGradient(win32_offscreen_buffer Buffer, int xOffset, in
 			/*
 			Pixel in Memory:	BB GG RR xx
 			Pixel in Register:  xx RR GG BB
-			0xxxRRGGBB
+			When writing  -->   0xxxRRGGBB 
 			*/
 			uint8 Blue = x + xOffset;
 			uint8 Green = y + yOffset;
@@ -220,14 +217,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			int xOffset = 0;
 			int yOffset = 0;
 
-			while (running)
+			while (GlobalRunning)
 			{	
 				MSG msg;
-				while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) // If Message = VM_QUIT, GetMeassage returns 0
+				while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) // 0 if there is no message
 				{
 					if (msg.message == WM_QUIT)
 					{
-						running = false;
+						GlobalRunning = false;
 					}
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);

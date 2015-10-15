@@ -1,13 +1,13 @@
-﻿Build started 13/10/2015 11:31:36 PM.
-     1>Project "E:\Game Programing\Low-level-game-programming\Win32Project1\Win32Project1.vcxproj" on node 2 (Build target(s)).
+﻿Build started 15/10/2015 5:09:47 PM.
+     1>Project "D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\Win32Project1\Win32Project1.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         E:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W1 /WX- /O2 /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\TestingNewName\\" /Fd"x64\TestingNewName\vc140.pdb" /Gd /TP /errorReport:prompt handmade.cpp
+         D:\Programs\Microsoft Visual Studio 15\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W1 /WX- /O2 /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\TestingNewName\\" /Fd"x64\TestingNewName\vc140.pdb" /Gd /TP /errorReport:prompt handmade.cpp
          handmade.cpp
        Link:
-         E:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Game Programing\Low-level-game-programming\x64\TestingNewName\Win32Project1.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Game Programing\Low-level-game-programming\x64\TestingNewName\Win32Project1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Game Programing\Low-level-game-programming\x64\TestingNewName\Win32Project1.lib" /MACHINE:X64 x64\TestingNewName\handmade.obj
-         Win32Project1.vcxproj -> E:\Game Programing\Low-level-game-programming\x64\TestingNewName\Win32Project1.exe
-     1>Done Building Project "E:\Game Programing\Low-level-game-programming\Win32Project1\Win32Project1.vcxproj" (Build target(s)).
+         D:\Programs\Microsoft Visual Studio 15\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\x64\TestingNewName\Win32Project1.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\x64\TestingNewName\Win32Project1.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\x64\TestingNewName\Win32Project1.lib" /MACHINE:X64 x64\TestingNewName\handmade.obj
+         Win32Project1.vcxproj -> D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\x64\TestingNewName\Win32Project1.exe
+     1>Done Building Project "D:\Game Proggraming\Visual Studio Projects\Hand made hero\Handmade_hero\Win32Project1\Win32Project1.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.27
+Time Elapsed 00:00:01.43
