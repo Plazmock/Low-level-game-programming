@@ -5,6 +5,7 @@
 #include <typeinfo>
 #include <string>
 #include <stdint.h>
+#include <XInput.h>
 
 using namespace std;
 
@@ -234,6 +235,40 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
 				}
+
+				for (DWORD ControllerIndex = 0; ControllerIndex < XUSER_MAX_COUNT; ControllerIndex++)
+				{
+
+					XINPUT_STATE ControllerState; // will hold the state from XInputGetState
+					if (XInputGetState(ControllerIndex, &ControllerState) == ERROR_SUCCESS)
+					{
+						// This controller is pluged in.
+						// TODO: See if ControllerState.dwPacketNumber increments too rapidly
+						XINPUT_GAMEPAD *Pad = &ControllerState.Gamepad;
+						bool Up = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_UP);
+						bool Down = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
+						bool Left = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
+						bool Right = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
+						bool Start = (Pad->wButtons & XINPUT_GAMEPAD_START);
+						bool Back = (Pad->wButtons & XINPUT_GAMEPAD_BACK);
+						bool LeftShoulder = (Pad->wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
+						bool RightShoulder = (Pad->wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
+						bool AButton = (Pad->wButtons & XINPUT_GAMEPAD_A);
+						bool BButton = (Pad->wButtons & XINPUT_GAMEPAD_B);
+						bool XButton = (Pad->wButtons & XINPUT_GAMEPAD_X);
+						bool YButton = (Pad->wButtons & XINPUT_GAMEPAD_Y);
+
+					}
+					else
+					{
+						// The controller is not avalible
+					}
+				}
+
+
+
+
+
 
 				// Renter and sipaly WierdGradient
 				RenderWierdGradient(GlobalBackBuffer, xOffset, yOffset);
