@@ -89,17 +89,14 @@ internal win32_window_dimention Win32GetWindowDimention(HWND Window)
 }
 
 // Render wierd colored moving boxes on the creen
-internal void RenderWierdGradient(win32_offscreen_buffer Buffer, int xOffset, int yOffset)
+internal void RenderWierdGradient(win32_offscreen_buffer *Buffer, int xOffset, int yOffset)
 {
-	int width = Buffer.Width;
-	int height = Buffer.Height;
-	
 
-	uint8 *Row = (uint8 *)Buffer.Memory;
-	for (int y = 0; y < Buffer.Height; ++y)
+	uint8 *Row = (uint8 *)Buffer->Memory;
+	for (int y = 0; y < Buffer->Height; ++y)
 	{
 		uint32 *Pixel = (uint32 *)Row;
-		for (int x = 0; x < Buffer.Width; ++x)
+		for (int x = 0; x < Buffer->Width; ++x)
 		{
 			/*
 			Pixel in Memory:	BB GG RR xx
@@ -111,7 +108,7 @@ internal void RenderWierdGradient(win32_offscreen_buffer Buffer, int xOffset, in
 
 			*Pixel++ = ((Green << 8) | Blue);
 		}
-		Row += Buffer.Pitch;
+		Row += Buffer->Pitch;
 	}
 }
 
@@ -147,7 +144,7 @@ internal void Win32ResizeDIBSelect(win32_offscreen_buffer *Buffer, int width, in
 }
 
 // Put the BitmapMemory on the screen
-internal void Win32DisplayBufferInWindow(HDC DeviceContext, int WindowWidth, int WindowHeight, win32_offscreen_buffer Buffer)
+internal void Win32DisplayBufferInWindow(win32_offscreen_buffer *Buffer, HDC DeviceContext, int WindowWidth, int WindowHeight)
 {
 
 	// BitBlt is better alternative?
@@ -158,8 +155,8 @@ internal void Win32DisplayBufferInWindow(HDC DeviceContext, int WindowWidth, int
 		x, y, width, height,
 		*/
 		0, 0, WindowWidth, WindowHeight, // destination
-		0, 0, Buffer.Width, Buffer.Height, // source
-		Buffer.Memory, &Buffer.Info,
+		0, 0, Buffer->Width, Buffer->Height, // source
+		Buffer->Memory, &Buffer->Info,
 		DIB_RGB_COLORS, SRCCOPY);
 
 }
@@ -172,50 +169,126 @@ LRESULT CALLBACK WndProc(HWND Window, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (uMsg)
 	{
-	
-	case WM_SIZE:
-	{
+
+		case WM_CLOSE:
+		{
+			PostQuitMessage(WM_QUIT); // Will end the while(GetMessage) loop witch will cause the main to finish.
+		} break;
+
+		case WM_SIZE:
+		{
 		
-	} break;
+		} break;
 
-	case WM_PAINT: // Paint to the window
-	{
-		PAINTSTRUCT Paint;
-		HDC DeviceContext = BeginPaint(Window, &Paint);
-		/*
-		int x = Paint.rcPaint.left;
-		int y = Paint.rcPaint.top;
-		int width = Paint.rcPaint.right - Paint.rcPaint.left;
-		int height = Paint.rcPaint.bottom - Paint.rcPaint.top;
-		*/
+		case WM_SYSKEYDOWN:
+		case WM_SYSKEYUP:
+		case WM_KEYDOWN:
+		case WM_KEYUP:
+		{
+			uint32 VKCode = wParam;
+			bool WasDown = ( (lParam & (1 << 30)) != 0);
+			bool IsDown = ((lParam & (1 << 31)) == 0);
+			if (IsDown != WasDown)
+			{
+				if (VKCode == 'W' || VKCode == 'w')
+				{
 
-		// Clean up double ClientRect use in code?
-		RECT ClientRect;
-		GetClientRect(Window, &ClientRect);
-		win32_window_dimention Dimention = Win32GetWindowDimention(Window);
-		Win32DisplayBufferInWindow(DeviceContext, Dimention.width, Dimention.height, GlobalBackBuffer);
-		EndPaint(Window, &Paint);
-	} break;
+				}
+				else if (VKCode == 'A' || VKCode == 'a')
+				{
 
-	case WM_DESTROY:
-	{
-		PostQuitMessage(WM_QUIT); // Will end the while(GetMessage) loop witch will cause the main to finish.
-	} break;
+				}
+				else if (VKCode == 'S' || VKCode == 's')
+				{
 
-	case WM_CLOSE:
-	{
-		PostQuitMessage(WM_QUIT); // Will end the while(GetMessage) loop witch will cause the main to finish.
-	} break;
+				}
+				else if (VKCode == 'D' || VKCode == 'd')
+				{
 
-	case WM_ACTIVATEAPP:
-	{
-		OutputDebugStringA("WM_ACTIVATEAPP\n");
-	} break;
+				}
+				else if (VKCode == 'Q' || VKCode == 'q')
+				{
 
-	default:
-	{
-		Result = DefWindowProc(Window, uMsg, wParam, lParam);
-	} break;
+				}
+				else if (VKCode == 'E' || VKCode == 'e')
+				{
+
+				}
+				else if (VKCode == VK_UP)
+				{
+
+				}
+				else if (VKCode == VK_DOWN)
+				{
+
+				}
+				else if (VKCode == VK_LEFT)
+				{
+
+				}
+				else if (VKCode == VK_RIGHT)
+				{
+
+				}
+				else if (VKCode == VK_ESCAPE)
+				{
+					OutputDebugStringA("ESCAPE: ");
+					if (IsDown)
+					{
+						OutputDebugStringA("IsDown ");
+					}
+
+					if (WasDown)
+					{
+						OutputDebugStringA("WasDown");
+					}
+					OutputDebugStringA("\n");
+				}
+				else if (VKCode == VK_SPACE)
+				{
+
+				}
+			}
+			
+
+
+		}break;
+
+
+		case WM_PAINT: // Paint to the window
+		{
+			PAINTSTRUCT Paint;
+			HDC DeviceContext = BeginPaint(Window, &Paint);
+			/*
+			int x = Paint.rcPaint.left;
+			int y = Paint.rcPaint.top;
+			int width = Paint.rcPaint.right - Paint.rcPaint.left;
+			int height = Paint.rcPaint.bottom - Paint.rcPaint.top;
+			*/
+
+			// Clean up double ClientRect use in code?
+			RECT ClientRect;
+			GetClientRect(Window, &ClientRect);
+			win32_window_dimention Dimention = Win32GetWindowDimention(Window);
+			Win32DisplayBufferInWindow(&GlobalBackBuffer, DeviceContext, Dimention.width, Dimention.height);
+			EndPaint(Window, &Paint);
+		} break;
+
+		case WM_DESTROY:
+		{
+			PostQuitMessage(WM_QUIT); // Will end the while(GetMessage) loop witch will cause the main to finish.
+		} break;
+
+
+		case WM_ACTIVATEAPP:
+		{
+			OutputDebugStringA("WM_ACTIVATEAPP\n");
+		} break;
+
+		default:
+		{
+			Result = DefWindowProc(Window, uMsg, wParam, lParam);
+		} break;
 
 	}
 
@@ -225,9 +298,12 @@ LRESULT CALLBACK WndProc(HWND Window, UINT uMsg, WPARAM wParam, LPARAM lParam)
 //	Main.
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+
+	// Controller input initiation
+	Win32LoadXInput();
 	
 //	The window class
-	WNDCLASS WindowClass = {};
+	WNDCLASSA WindowClass = {};
 
 	Win32ResizeDIBSelect(&GlobalBackBuffer, 1280, 720);
 
@@ -306,16 +382,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					}
 				}
 
-
-
-
-
-
 				// Renter and sipaly WierdGradient
-				RenderWierdGradient(GlobalBackBuffer, xOffset, yOffset);
+				RenderWierdGradient(&GlobalBackBuffer, xOffset, yOffset);
 
 				win32_window_dimention Dimention = Win32GetWindowDimention(Window);
-				Win32DisplayBufferInWindow(DeviceContext, Dimention.width, Dimention.height, GlobalBackBuffer);
+				Win32DisplayBufferInWindow(&GlobalBackBuffer, DeviceContext, Dimention.width, Dimention.height);
 				
 
 				++xOffset;
