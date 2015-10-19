@@ -48,7 +48,8 @@ struct win32_window_dimention
 typedef X_INPUT_GET_STATE(x_input_get_state);
 X_INPUT_GET_STATE(XInputGetStateStub)
 {
-	return 0;
+	return ERROR_DEVICE_NOT_CONNECTED;
+
 }
 global_variable x_input_get_state *XInputGetState_ = XInputGetStateStub;
 #define XInputGetState XInputGetState_
@@ -59,14 +60,19 @@ global_variable x_input_get_state *XInputGetState_ = XInputGetStateStub;
 typedef X_INPUT_SET_STATE(x_input_set_state);
 X_INPUT_SET_STATE(XInputSetStateStub)
 {
-	return 0;
+	return ERROR_DEVICE_NOT_CONNECTED;
 }
 global_variable x_input_set_state *XInputSetState_ = XInputSetStateStub;
 #define XInputSetState XInputSetState_
 
 internal void Win32LoadXInput()
 {
+	// TODO: Test on windows 8
+	HMODULE XInputLibrary = LoadLibrary("xinput1_4.dll");
+	if (!XInputLibrary)
+	{
 	HMODULE XInputLibrary = LoadLibrary("xinput1_3.dll");
+	}
 	if (XInputLibrary)
 	{
 		XInputGetState = (x_input_get_state *)GetProcAddress(XInputLibrary, "XInputGetState");
@@ -250,7 +256,11 @@ LRESULT CALLBACK WndProc(HWND Window, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				}
 			}
 			
-
+			bool AltKeyIsDown = ((lParam & (1 << 29)) != 0 ); 
+			if (VKCode == VK_F4 && AltKeyIsDown)
+			{
+				GlobalRunning = false;
+			}
 
 		}break;
 

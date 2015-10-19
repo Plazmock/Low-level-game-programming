@@ -44,3 +44,4 @@ Temporary Items
 *.log
 Win32Project1/x64/TestingNewName/Win32Project1.tlog/link.read.1.tlog
 *.exe
+*.opensdf
